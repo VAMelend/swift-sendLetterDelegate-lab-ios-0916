@@ -8,7 +8,8 @@
 
 import UIKit
 
-class NewYorkViewController: UIViewController {
+class NewYorkViewController: UIViewController, LondonViewControllerDelegate {
+    
     
     // View elements
     @IBOutlet weak var receivedHeaderLabel: UILabel!
@@ -21,6 +22,16 @@ class NewYorkViewController: UIViewController {
     @IBOutlet weak var packageCenterYConstraint: NSLayoutConstraint!
     
     // MARK: View Lifecycle
+    
+    
+    func letterSent(from: LondonViewController, message: String) {
+        letterTextView.text = message
+        receivedHeaderLabel.isHidden = false
+        letterTextView.isHidden = false
+        packageImageView.isHidden = true
+        sendButton.isHidden = true
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +53,8 @@ class NewYorkViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "sentSegue" {
+            let destination = segue.destination as! LondonViewController
+            destination.delegate = self
             
         }
         
@@ -83,7 +96,9 @@ class NewYorkViewController: UIViewController {
             completion()
         }
         
+       
     }
-
 }
+
+
 
